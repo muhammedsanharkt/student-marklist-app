@@ -15,6 +15,15 @@ $sql = "SELECT * FROM students_marks";
 $result = $conn->query($sql);
 ?>
 
+<?php
+session_start();
+if (!isset($_SESSION["username"])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,6 +66,8 @@ $result = $conn->query($sql);
   <div class="card shadow-sm">
     <div class="card-body">
       <h2 class="card-title text-center mb-4">Student Records</h2>
+      <p>User details: <span class="text-danger"><?= htmlspecialchars($_SESSION["username"]) ?></span></p>
+
 
       <?php if ($result->num_rows > 0): ?>
         <div class="table-responsive">
