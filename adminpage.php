@@ -15,11 +15,16 @@ $nameErr = $subjectErr = $marksErr = "";
 $name = $subject = $marks = "";
 $success = "";
 
+$success = "";
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    $success = "Student record added successfully!";
+}
+
+
 // Form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $valid = true;
 
-    // Name validation
     if (empty($_POST['student_name'])) {
         $nameErr = "Student name is required";
         $valid = false;
@@ -31,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         }
     }
 
-    // Subject validation
     if (empty($_POST['subject'])) {
         $subjectErr = "Subject is required";
         $valid = false;
@@ -43,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         }
     }
 
-    // Marks validation
     if (empty($_POST['marks'])) {
         $marksErr = "Marks are required";
         $valid = false;
@@ -55,20 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         }
     }
 
-    // Insert if valid
     if ($valid) {
         $insert = "INSERT INTO students_marks (STUDENT_NAME, SUBJECT, MARKS)
                    VALUES ('$name', '$subject', $marks)";
         if ($conn->query($insert) === TRUE) {
-            $success = "Student record added successfully!";
-            $name = $subject = $marks = ""; // Clear form
-        } else {
-            $success = "Error: " . $conn->error;
-        }
+    // Redirect to the same page (avoids form resubmission on refresh)
+    header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
+    exit();
+}
+
     }
 }
 
-// Fetch student records
 $sql = "SELECT * FROM students_marks";
 $result = $conn->query($sql);
 ?>
@@ -82,9 +83,39 @@ $result = $conn->query($sql);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
     .error-msg { color: red; font-size: 0.875rem; }
+    
   </style>
 </head>
-<body class="bg-light text-dark">
+<body class="bg-light text-dark d-flex flex-column min-vh-100">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="home.php">School Management</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="home.php">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+
+    <a class="btn btn-success ms-auto me-1" href="login.php">Switch Account</a>
+    <a class="btn btn-warning" href="registration.php">register</a>
+    
+  </div>
+  </nav>
 
 <div class="container my-5">
   <div class="card shadow-sm">
@@ -128,8 +159,8 @@ $result = $conn->query($sql);
       <?php endif; ?>
 
       <div class="text-center mt-4">
-        <a href="individual-student.php" class="btn btn-primary">View Individual Students</a>
-        <a href="subject.php" class="btn btn-secondary">View Subject-wise Results</a>
+        <a href="admin-individual-marks.php" class="btn btn-primary">View Individual Students</a>
+        <a href="admin-subject-wise.php" class="btn btn-secondary">View Subject-wise Results</a>
       </div>
 
       <hr class="my-5"/>

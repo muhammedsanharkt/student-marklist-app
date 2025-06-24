@@ -95,7 +95,7 @@ $conn->close();
   </div>
 </div>
 
-<a href="userhome.php" class="btn btn-success mt-3 text-white">Go Back</a>
+<a href="adminpage.php" class="btn btn-success mt-3 text-white">Go Back</a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

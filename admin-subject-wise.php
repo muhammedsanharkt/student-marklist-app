@@ -75,7 +75,7 @@ $conn->close();
 
   </div>
   <div class="text-center mt-4">
-    <a href="userhome.php" class="btn btn-success text-white">Go Back</a>
+    <a href="adminpage.php" class="btn btn-success text-white">Go Back</a>
   </div>
 </div>
 
