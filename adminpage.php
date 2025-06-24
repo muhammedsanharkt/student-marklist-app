@@ -121,7 +121,7 @@ if (!isset($_SESSION["username"])) {
     </div>
 
     <a class="btn btn-success ms-auto me-1" href="login.php">Switch Account</a>
-    <a class="btn btn-warning" href="registration.php">register</a>
+    <a class="btn btn-warning" href="registration.php">Register</a>
     
   </div>
   </nav>

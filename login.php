@@ -32,6 +32,7 @@
                   $_SESSION["user_id"] = $user["id"];
                   $_SESSION["username"] = $user["username"];
                   $_SESSION["role"] = $user["role"];
+                  
 
                   // Redirect based on role
                   if ($user["role"] === "admin") {
