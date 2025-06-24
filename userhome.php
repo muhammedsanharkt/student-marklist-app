@@ -99,6 +99,8 @@ if (!isset($_SESSION["username"])) {
       <div class="text-center mt-4">
         <a href="individual-student.php" class="btn btn-primary">View Individual Students</a>
         <a href="subject.php" class="btn btn-secondary">View Subject-wise Results</a>
+        <a href="overall.php" class="btn btn-info">View Overall Ranking</a>
+        
       </div>
     </div>
   </div>

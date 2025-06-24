@@ -28,7 +28,7 @@ if (isset($_POST['update'])) {
 
     $update = "UPDATE students_marks SET STUDENT_NAME='$name', SUBJECT='$subject', MARKS=$marks WHERE id=$id";
     if ($conn->query($update) === TRUE) {
-        echo "<script>window.location.href='home.php';</script>";
+        echo "<script>window.location.href='adminpage.php';</script>";
     } else {
         echo "<div class='alert alert-danger'>Error updating: " . $conn->error . "</div>";
     }
@@ -62,7 +62,7 @@ if (isset($_POST['update'])) {
           <input type="number" name="marks" class="form-control" value="<?= htmlspecialchars($row['MARKS']) ?>" required>
         </div>
         <button type="submit" name="update" class="btn btn-primary">Update</button>
-        <a href="home.php" class="btn btn-secondary">Cancel</a>
+        <a href="adminpage.php" class="btn btn-secondary">Cancel</a>
       </form>
     </div>
   </div>

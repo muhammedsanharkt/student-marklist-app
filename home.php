@@ -58,9 +58,9 @@ if ($conn->connect_error) {
 <!-- Hero Section -->
 <section class="hero">
   <div class="container">
-    <h1 class="display-4">Welcome to School Management System</h1>
-    <p class="lead mt-3">Easily manage student data, view performance, and control access.</p>
-    <a href="login.php" class="btn btn-light btn-lg mt-3">Get Started</a>
+    <h1 class="display-4">Welcome</h1>
+    <p class="lead mt-3">Your Exam Results Are Out Now</p>
+    <a href="login.php" class="btn btn-light btn-lg mt-3">Get your Results</a>
   </div>
 </section>
 

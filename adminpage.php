@@ -171,6 +171,7 @@ if (!isset($_SESSION["username"])) {
       <div class="text-center mt-4">
         <a href="admin-individual-marks.php" class="btn btn-primary">View Individual Students</a>
         <a href="admin-subject-wise.php" class="btn btn-secondary">View Subject-wise Results</a>
+        <a href="adminoverall.php" class="btn btn-info">View Overall Ranking</a>
       </div>
 
       <hr class="my-5"/>
