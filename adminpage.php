@@ -20,7 +20,6 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
     $success = "Student record added successfully!";
 }
 
-
 // Form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $valid = true;
@@ -62,26 +61,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         $insert = "INSERT INTO students_marks (STUDENT_NAME, SUBJECT, MARKS)
                    VALUES ('$name', '$subject', $marks)";
         if ($conn->query($insert) === TRUE) {
-    // Redirect to the same page (avoids form resubmission on refresh)
-    header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
-    exit();
-}
-
+            header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
+            exit();
+        }
     }
 }
 
 $sql = "SELECT * FROM students_marks";
 $result = $conn->query($sql);
-?>
 
-<?php
 session_start();
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,9 +84,9 @@ if (!isset($_SESSION["username"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Student Mark List</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <style>
     .error-msg { color: red; font-size: 0.875rem; }
-    
   </style>
 </head>
 <body class="bg-light text-dark d-flex flex-column min-vh-100">
@@ -100,31 +94,21 @@ if (!isset($_SESSION["username"])) {
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="home.php">School Management</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
+        <li class="nav-item"><a class="nav-link active" href="home.php">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
       </ul>
     </div>
-
-    <a class="btn btn-success ms-auto me-1" href="login.php">Switch Account</a>
+    <a class="btn btn-success ms-auto me-1" href="login.php">Logout</a>
     <a class="btn btn-warning" href="registration.php">Register</a>
-    
   </div>
-  </nav>
+</nav>
 
 <div class="container my-5">
   <div class="card shadow-sm">
@@ -201,14 +185,44 @@ if (!isset($_SESSION["username"])) {
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Auto-hide success message
   setTimeout(() => {
     const msg = document.getElementById('successMsg');
     if (msg) msg.style.display = 'none';
   }, 3000);
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  $(function () {
+    $("#student_name").autocomplete({
+      source: function (request, response) {
+        $.ajax({
+          url: "autocomplete.php",
+          dataType: "json",
+          data: { type: "name", term: request.term },
+          success: function (data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 1
+    });
+
+    $("#subject").autocomplete({
+      source: function (request, response) {
+        $.ajax({
+          url: "autocomplete.php",
+          dataType: "json",
+          data: { type: "subject", term: request.term },
+          success: function (data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 1
+    });
+  });
+</script>
 </body>
 </html>
